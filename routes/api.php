@@ -20,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('alunos/get', function(Request $request){
     set_time_limit(3000);
-    $alunos = Aluno::get();
+    $alunos = Aluno::get()->orderBy('cidade');
     return json_encode($alunos);
 })->name('api.alunos.get');
