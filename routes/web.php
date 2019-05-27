@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('aluno/report-database', function (Request $request) {
+    set_time_limit(3000);
     $input = app_path('Reports') . DIRECTORY_SEPARATOR . 'Coffee_Landscape.jasper';
     $output = public_path('uploads') . DIRECTORY_SEPARATOR . 'alunos';
     $jasper = new JasperPHP(app_path('Reports'));
@@ -54,6 +55,7 @@ Route::get('aluno/report-database', function (Request $request) {
 })->name('aluno.report.basic');
 
 Route::get('aluno/report-api', function (Request $request) {
+    set_time_limit(3000);
     $file = 'Aluno_';
     $input = app_path('Reports') . DIRECTORY_SEPARATOR . 'Coffee_Landscape_Api.jasper';
     $output = public_path('uploads') . DIRECTORY_SEPARATOR . $file;

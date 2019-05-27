@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('alunos/get', function(Request $request){
-    $alunos = Aluno::where('cidade', 'like', '%Norte%')->get();
+    set_time_limit(3000);
+    $alunos = Aluno::get();
     return json_encode($alunos);
 })->name('api.alunos.get');
