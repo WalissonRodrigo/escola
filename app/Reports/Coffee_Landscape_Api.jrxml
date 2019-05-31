@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Coffee_Landscape_Api" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="API Escola"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="API_Alunos.xml"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -13,9 +13,9 @@
 		</conditionalStyle>
 	</style>
 	<queryString language="JSON">
-		<![CDATA[id]]>
+		<![CDATA[.]]>
 	</queryString>
-	<field name="id" class="java.lang.String">
+	<field name="id" class="java.lang.Integer">
 		<property name="net.sf.jasperreports.json.field.expression" value="id"/>
 		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
@@ -94,7 +94,7 @@
 				<text><![CDATA[Disponível via api publica GET]]></text>
 			</staticText>
 			<image>
-				<reportElement x="633" y="-73" width="219" height="209" uuid="4aa6f4d1-27dc-4b34-9227-59e19ce2c959"/>
+				<reportElement x="633" y="-40" width="189" height="175" uuid="4aa6f4d1-27dc-4b34-9227-59e19ce2c959"/>
 				<imageExpression><![CDATA["coffee_stain.png"]]></imageExpression>
 			</image>
 		</band>
@@ -167,7 +167,7 @@
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a00cfba6-8af0-4700-8a08-1531fae5a3bc"/>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="12"/>
+						<font fontName="Arial" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA["COD:" + $F{id}]]></textFieldExpression>
 				</textField>
@@ -176,7 +176,7 @@
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e44181c0-a49d-454e-848e-bb98b0afd138"/>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="12"/>
+						<font fontName="Arial" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 				</textField>
@@ -185,7 +185,7 @@
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3ba56484-f12c-4f0b-9862-599b82dd4830"/>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="12"/>
+						<font fontName="Arial" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{endereco}]]></textFieldExpression>
 				</textField>
@@ -194,7 +194,7 @@
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b950ad42-fefa-43e3-a1ce-c093aae5269e"/>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="12"/>
+						<font fontName="Arial" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{created_at}]]></textFieldExpression>
 				</textField>
@@ -203,7 +203,7 @@
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3c07cd3b-e3e5-4706-ad2c-1d423709abe7"/>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="12"/>
+						<font fontName="Arial" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{updated_at}]]></textFieldExpression>
 				</textField>

@@ -46,16 +46,39 @@ class Aluno extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
-    public function reportBasic()
+    public function reportSql()
     {
-        $url = route('aluno.report.basic');
-        return '<a class="btn btn-xs btn-success" target="_blank" href="' . $url . '" data-toggle="tooltip" title="Relatório construido com Jasper a partir do banco de dados"><i class="fa fa-file"></i> PDF</a>';
+        $url = route('aluno.report.basic.sql');
+        return '<a target="_blank" href="' . $url .
+            '" data-toggle="tooltip" title="Relatório construido com Jasper a partir do banco de dados">
+                <i class="fa fa-file"></i> SQL</a>';
     }
 
     public function reportApi()
     {
-        $url = route('aluno.report.api');
-        return '<a class="btn btn-primary ladda-button" target="_blank" href="' . $url . '" data-toggle="tooltip" title="Relatório construido com Jasper a partir de API Json"><i class="fa fa-file"></i> API</a>';
+        $url = route('aluno.report.basic.api');
+        return '<a target="_blank" href="' . $url .
+            '" data-toggle="tooltip" title="Relatório construido com Jasper a partir de API Json">
+                <i class="fa fa-file"></i> API</a>';
+    }
+
+    public function reports()
+    {
+        $btnSql = self::reportSql();
+        $btnApi = self::reportApi();
+        $html = <<<EOD
+        <div class="btn-group">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Relatórios
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li>$btnSql</li>
+                    <li>$btnApi</li>
+                </ul>
+            </div>
+        </div>
+EOD;
+        return $html;
     }
     /*
     |--------------------------------------------------------------------------

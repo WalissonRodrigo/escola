@@ -8,7 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\AlunoRequest as StoreRequest;
 use App\Http\Requests\AlunoRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
-use JasperPHP\Facades\JasperPHP;
+use JasperPHP\JasperPHP;
 
 /**
  * Class AlunoCrudController
@@ -29,9 +29,8 @@ class AlunoCrudController extends CrudController
         $this->crud->setEntityNameStrings('aluno', 'alunos');
         $this->crud->enableExportButtons(true);
         $this->crud->enableResponsiveTable(true);
-
-        $this->crud->addButtonFromModelFunction('top', 'aluno', 'reportApi', 'beginning');
-        $this->crud->addButtonFromModelFunction('line', 'aluno', 'reportBasic', 'beginning');
+        $this->crud->addButtonFromModelFunction('top', 'aluno', 'reports', 'beginning');
+        //$this->crud->addButtonFromModelFunction('line', 'aluno', 'reportBasic', 'beginning');
         // add a button whose HTML is returned by a method in the CRUD model
         /*
         |--------------------------------------------------------------------------
@@ -79,26 +78,64 @@ class AlunoCrudController extends CrudController
         return $redirect_location;
     }
 
-    public function reportBasic()
+    public function reportBasicSql()
     {
-        $input = app_path('Reports') .DIRECTORY_SEPARATOR. 'Coffee_Landscape.jasper';
-        $output = public_path('uploads').DIRECTORY_SEPARATOR.'alunos';
-        $jasper = new JasperPHP;
+        set_time_limit(3000);
+        $file = 'Aluno';
+        $input = app_path('Reports') . DIRECTORY_SEPARATOR . 'Coffee_Landscape.jasper';
+        $output = public_path('uploads') . DIRECTORY_SEPARATOR . $file;
+        $jasper = new JasperPHP(app_path('Reports'));
 
         $jasper->process(
-            $input,
-            $output,
-            ['pdf'],
-            null,
-            [
-                'driver' => env('DB_CONNECTION'), //mysql, ....
-                'username' => env('DB_USERNAME'),
-                'password' => env('DB_PASSWORD'),
-                'host' => env('DB_HOST'),
-                'database' => env('DB_DATABASE'),
-                'port' => env('DB_PORT'),
-            ]
+            $input, $output, ['pdf'], [], ['driver' => env('DB_CONNECTION'), 'username' => env('DB_USERNAME'), 
+                'password' => env('DB_PASSWORD'), 'host' => env('DB_HOST'), 
+                'database' => env('DB_DATABASE'), 'port' => env('DB_PORT'), ]
         )->execute();
-        return response()->file($output.'.pdf');
-     }
+
+        $file = $output . '.pdf';
+        $path = $file;
+        // caso o arquivo não tenha sido gerado retorno um erro 404
+        if (!file_exists($file)) {
+            abort(404);
+        }
+        //caso tenha sido gerado pego o conteudo
+        $file = file_get_contents($file);
+        //deleta o arquivo gerado, pois iremos mandar o conteudo para o navegador
+        unlink($path);
+        // retornamos o conteudo para o navegador que íra abrir o PDF
+        return response($file, 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="cliente.pdf"');
+    }
+
+    public function reportBasicApi()
+    {
+        set_time_limit(3000);
+        $file = 'Aluno';
+        $input = app_path('Reports') . DIRECTORY_SEPARATOR . 'Coffee_Landscape_Api.jasper';
+        $output = public_path('uploads') . DIRECTORY_SEPARATOR . $file;
+        $json = $output . '.json';
+        file_put_contents($json, file_get_contents(route('api.alunos.get'), false));
+        $jasper = new JasperPHP(app_path('Reports'));
+        $jasper->process(
+         //jasper, saída, tipos arquivos, parametros, conexão
+            $input, $output, array("pdf"), array(), array("driver" => "json", "json_query" => ".", "data_file" => $json)
+        )->execute();
+        //apaga arquivo json temporário
+        unlink($json);
+        $file = $output . '.pdf';
+        $path = $file;
+        // caso o arquivo não tenha sido gerado retorno um erro 404
+        if (!file_exists($file)) {
+            abort(404);
+        }
+        //caso tenha sido gerado pego o conteudo
+        $file = file_get_contents($file);
+        //deleta o arquivo gerado, pois iremos mandar o conteudo para o navegador
+        unlink($path);
+        // retornamos o conteudo para o navegador que íra abrir o PDF
+        return response($file, 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="cliente.pdf"');
+    }
 }
